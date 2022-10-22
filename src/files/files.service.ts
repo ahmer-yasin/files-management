@@ -11,6 +11,7 @@ import { UpdateFileDto } from './dto/update-file.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { File } from './entities/file.entity';
+import { FindFilesDTO } from './dto/find-file.dto';
 
 @Injectable()
 export class FilesService {
@@ -44,9 +45,20 @@ export class FilesService {
     }
   }
 
-  async findAll() {
+  async findAll(query: FindFilesDTO) {
     try {
-      const files = await this.fileRepo.find();
+      const page = typeof query.page !== 'undefined' ? query.page : 1;
+      const limit =
+        typeof query.limit !== 'undefined' && query.limit <= 100
+          ? query.limit
+          : 10;
+      const offset = limit * (page - 1);
+      const files = await this.fileRepo
+        .createQueryBuilder('file')
+        .limit(limit)
+        .offset(offset)
+        .orderBy('file.created_at', 'DESC')
+        .getMany();
       return {
         status: true,
         message: `File list found successfully`,

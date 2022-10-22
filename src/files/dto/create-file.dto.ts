@@ -11,6 +11,4 @@ export class CreateFileDto {
 
   @IsNotEmpty()
   readonly file_content: Buffer;
-
-  version: number;
 }

@@ -7,10 +7,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
+import { FindFilesDTO } from './dto/find-file.dto';
 
 @Controller('files')
 export class FilesController {
@@ -22,8 +24,8 @@ export class FilesController {
   }
 
   @Get()
-  findAll() {
-    return this.filesService.findAll();
+  findAll(@Query('page') query: FindFilesDTO) {
+    return this.filesService.findAll(query);
   }
 
   @Get(':id')

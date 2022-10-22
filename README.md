@@ -35,3 +35,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Test Api
+
+- open localhost:3000/api at browser
+

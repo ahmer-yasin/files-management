@@ -22,7 +22,7 @@ export class File {
     default: 0,
     type: 'int',
   })
-  verson: number;
+  version: number;
 
   @Column({
     nullable: true,

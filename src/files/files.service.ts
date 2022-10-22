@@ -30,8 +30,8 @@ export class FilesService {
         .getOne();
       if (fileExist) {
         console.warn(`File Already Exists`);
-        file.file_name = `${createFileDto.file_name}_${fileExist.verson + 1}`;
-        file.verson = fileExist.verson + 1;
+        file.file_name = `${createFileDto.file_name}_${fileExist.version + 1}`;
+        file.version = fileExist.version + 1;
       }
       const saveFile = await this.fileRepo.save(file);
       return {
@@ -55,6 +55,13 @@ export class FilesService {
       const offset = limit * (page - 1);
       const files = await this.fileRepo
         .createQueryBuilder('file')
+        .select([
+          'file.id',
+          'file.url',
+          'file.file_name',
+          'file.version',
+          'file.created_at',
+        ])
         .limit(limit)
         .offset(offset)
         .orderBy('file.created_at', 'DESC')

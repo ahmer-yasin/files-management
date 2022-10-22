@@ -74,10 +74,10 @@ export class CronService {
             // warning that file already exist before store again
             console.warn(`File Already Exists`);
             file.file_name = `${splVal[splVal.length - 1]}_${
-              fileExist.verson + 1
+              fileExist.version + 1
             }`;
             // update last version
-            file.verson = fileExist.verson + 1;
+            file.version = fileExist.version + 1;
           }
           // save file again
           await this.fileRepo.save(file);
